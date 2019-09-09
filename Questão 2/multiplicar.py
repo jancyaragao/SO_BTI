@@ -1,7 +1,7 @@
 import os
 import random
 import threading
-
+import datetime
 sem = threading.Lock()
 
 def process_multiply(row_a, row_b, results):
@@ -27,7 +27,7 @@ def print_matrix(matrix):
             print(matrix[i][j], end="   ")
         print()
 
-def unroll(args, func, method, results):
+def unroll(args, func, method, results,time):
     matrix1 = args[0]
     matrix2 = args[1]
     print("Primeira Matriz")
@@ -50,6 +50,9 @@ def unroll(args, func, method, results):
         sem.acquire()
         print("Matriz Resultante")
         print_matrix(results)
+        fim = datetime.datetime.today()
+        duracao = fim-time
+        print("Duração :", duracao)
         sem.release()
     else: 
         processos = []
@@ -61,8 +64,9 @@ def unroll(args, func, method, results):
         print_matrix(results)
 
 if __name__ == '__main__':
+    inicio = datetime.datetime.today()
     res = []
     matrix1 = [[0,1,2],[3,4,5],[6,7,8]]
     matrix2 = [[8,7,6],[5,4,3],[2,1,0]]
     # unroll([matrix1,matrix2], process_multiply, 'proc', res)
-    unroll([matrix1,matrix2], thread_mult, 'thre', res)
+    unroll([matrix1,matrix2], thread_mult, 'thre', res,inicio)
