@@ -1,7 +1,7 @@
 import os
 import random
 import threading
-
+import datetime
 sem = threading.Lock()
 # def somar_proc(row_a, row_b, results):
 #     pid = os.fork() 
@@ -22,7 +22,7 @@ def print_matrix(matrix):
             print(matrix[i][j], end="   ")
         print()
 
-def unroll(args, func, method, results):
+def unroll(args, func, method, results,time):
     matrix1 = args[0]
     matrix2 = args[1]
     print("Primeira Matriz")
@@ -45,8 +45,11 @@ def unroll(args, func, method, results):
             for j in range(cols):
                 threads[i+j].join()
         sem.acquire() 
-        print("Matriz Resultante\n")     
+        print("Matriz Resultante")     
         print_matrix(results)
+        fim = datetime.datetime.today()
+        duracao = fim - time
+        print("Duração da execução: ",duracao.total_seconds())
         sem.release()
 
     else: 
@@ -56,9 +59,11 @@ def unroll(args, func, method, results):
         print_matrix(results)
 
 if __name__ == '__main__':
+    import datetime
+    inicio = datetime.datetime.today()
     res = []
     matrix1 = [[0,1,2],[3,4,5],[6,7,8]]
     matrix2 = [[8,7,6],[5,4,3],[2,1,0]]
     # unroll([matrix1,matrix2], somar_proc, 'proc', res)
-    unroll([matrix1,matrix2], somar_thre, 'thre', res)
+    unroll([matrix1,matrix2], somar_thre, 'thre', res,inicio)
     print_matrix(res)
