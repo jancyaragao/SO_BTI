@@ -49,7 +49,7 @@ def unroll(args, func, method, results,time):
         print_matrix(results)
         fim = datetime.datetime.today()
         duracao = fim - time
-        print("Duração da execução: ",duracao)
+        print("Duração da execução: ",duracao.total_seconds())
         sem.release()
 
     else: 

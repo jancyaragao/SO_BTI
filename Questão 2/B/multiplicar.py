@@ -52,7 +52,7 @@ def unroll(args, func, method, results,time):
         print_matrix(results)
         fim = datetime.datetime.today()
         duracao = fim-time
-        print("Duração :", duracao)
+        print("Duração :", duracao.total_seconds())
         sem.release()
     else: 
         processos = []
